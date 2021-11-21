@@ -53,7 +53,7 @@ This repo was created under xxx UAM xxx Smart cities in Caldas, Colombia.
 
 ## Contact us
 - Daniel Garcia Murillo (danielggarciam@gmail.com)
-- Julián Caicedo Acosta (julianc.caicedoa@autonoma.edu.co/juccaicedoac@gmail.com)
+- Julián Caicedo Acosta (julianc.caicedoa@autonoma.edu.co, juccaicedoac@gmail.com)
 
 
 
