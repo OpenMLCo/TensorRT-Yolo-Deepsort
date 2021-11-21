@@ -122,6 +122,7 @@ class people_hand_detector():
             #identities = outputs[:, -1]
             if sum(cls_ids == 2)>0:
                 self.count_hand_frames += 1
-            ori_im = draw_boxes(ori_im, bbox_xyxy)
+            if not self.save_foto_flag:
+                ori_im = draw_boxes(ori_im, bbox_xyxy)
         return ori_im
 
