@@ -13,7 +13,7 @@
 
 ### Requirements
 
-- jetpack >= 4.5, following the instructions [here](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit#intro) <br />
+- jetpack >= 4.5, following the [instructions](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit#intro) <br />
 - onnx == 1.4.0 or 1.4.1 <br />
 
 ### Initial configuration
