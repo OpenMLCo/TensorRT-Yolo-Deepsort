@@ -73,8 +73,6 @@ def main():
     cam.open()
     if not cam.is_opened:
         sys.exit('Failed to open camera!')
-    else: 
-        print('todo bien')
     model = people_hand_detector(args.engine_path)
 
     cam.start()
