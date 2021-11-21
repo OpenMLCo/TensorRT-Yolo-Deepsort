@@ -1,7 +1,7 @@
 # TensorRT-Yolo-Deepsort
 
 ## Table of contents
-* [###PedTrack](PedTrack/)
+* [PedTrack](PedTrack/) Yolov4 with DeepSort for pedestrian counting
 
 # Pedestrian photo for Jetson Nano
 
