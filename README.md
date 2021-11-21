@@ -1,15 +1,20 @@
 # TensorRT-Yolo-Deepsort
 
 ## Table of contents
-* [PedTrack](PedTrack/): YoloV4-tiny with DeepSort for pedestrian counting.
+* [PedTrack](PedTrack/): YoloV4-tiny with DeepSort for pedestrian tracking.
 * [Pedestrian-photo](Pedestrian-photo): People and hand detection using YoloV4-tiny for user expirience.
 
-# Pedestrian photo for Jetson Nano
+## Install
 
-### Pre-requisites
-python 3.xx
-Install jetpack >= 4.5, following the instructions [here](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit#intro) <br />
-Install onnx == 1.4.0 or 1.4.1 () <br />
+### Environment
+
+- python 3.xx
+- Jetson nano with TernsorRT x.x.x.x
+
+### Requirements
+
+- jetpack >= 4.5, following the instructions [here](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit#intro) <br />
+- onnx == 1.4.0 or 1.4.1 <br />
 
 ### Initial configuration
 
