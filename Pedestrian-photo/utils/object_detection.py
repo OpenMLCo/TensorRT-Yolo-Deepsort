@@ -2,7 +2,6 @@ import tensorrt as trt
 from utils import common
 from utils.data_processing import *
 from utils.draw import draw_boxes, put_text_frame, save_img
-from deep_sort import build_tracker
 import time
 
 TRT_LOGGER = trt.Logger()
