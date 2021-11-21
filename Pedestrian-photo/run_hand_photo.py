@@ -70,7 +70,6 @@ def loop_and_detect(cam, model, arg):
 
 def main():
     args = parse_args()
-
     cam = Camera(args)
     cam.open()
     if not cam.is_opened:
