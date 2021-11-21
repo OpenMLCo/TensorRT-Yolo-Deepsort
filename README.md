@@ -31,23 +31,20 @@
 4. Edit configs/DG_labels.txt file with the labels in yolo model.
 5. Convert yolo model to Onnx.
   ```shell
-  #Use the following code and replace the x:
   python yolo_to_onnx.py --model yolov4-tiny-512 --weights weights/xxxx.weights --config confis/xxxx.cfg --output_file model_onnx/xxxx.onnx --category_num x
   ```
 6. Convert Onnx model to TensorRT engine. 
   ```shell
-  #Use the following code and replace the x:
   python onnx_to_tensorrt.py --onnx_model model_onnx/xxxx.onnx --output_engine model_tensorRT/xxxx.engine
   ```
 7. Run demos.
   * PedTrack
     ```shell
-    #Use the following code and replace the x:
     python Code here!!!
     ```    
   * Pedestrian-photo
     ```shell
-    #Use the following code and replace the x:
+    #Using usb camera:
     python run_hand_photo.py --engine_path model_tensorRT/xxxx.engine --usb
     ```
 
