@@ -28,7 +28,9 @@ python onnx_to_tensorrt.py --onnx_model model_onnx/xxxx.onnx --output_engine mod
 python run_hand_photo.py --engine_path model_tensorRT/xxxx.engine --usb 
 
 
-
+### Contact us
+Daniel Garcia Murillo (danielggarciam@gmail.com)
+Julian Caicedo Acosta (juccaicedoac@unal.edu.co )
 
 
 
