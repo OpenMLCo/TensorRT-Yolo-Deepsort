@@ -14,7 +14,7 @@ def get_engine(engine_file_path):
         return runtime.deserialize_cuda_engine(f.read())
 
 class people_hand_detector():
-    def __init__(self, engine_file_path):
+    def __init__(self, engine_file_path,img_path):
         #---tensorrt----#
         self.engine = get_engine(engine_file_path)
         self.context = self.engine.create_execution_context()
@@ -22,6 +22,7 @@ class people_hand_detector():
         # ---tensorrt----#
         # initializate current photo
         self.count_hand_frames = 0
+        self.img_path=img_path
         self.count_frames = 0
         self.prev_time = time.time()
         self.save_foto_flag=False
@@ -69,7 +70,7 @@ class people_hand_detector():
             if self.save_foto_flag:
                 color=(0,255,255)
                 if self.time_before_photo+5-(int(time.time()-self.prev_time)) < 0:
-                    save_img(ori_im)
+                    save_img(self.img_path,ori_im)
                     self.save_foto_flag=False
                     self.count_hand_frames=0
                     self.count_frames=0

@@ -20,6 +20,8 @@ def parse_args():
                             help='set your engine file path to load')
     parser.add_argument('--output_file', type=str, default='./test.mp4', 
                             help='path to save your video like  ./test.mp4')
+    parser.add_argument('--output_photo', type=str, default='img.jpg', 
+                            help='path to save photo')
     args = parser.parse_args()
     return args
 
@@ -73,7 +75,7 @@ def main():
     cam.open()
     if not cam.is_opened:
         sys.exit('Failed to open camera!')
-    model = people_hand_detector(args.engine_path)
+    model = people_hand_detector(args.engine_path,args.img_path)
 
     cam.start()
     open_window(WINDOW_NAME, args.image_width, args.image_height,

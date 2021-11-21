@@ -22,8 +22,8 @@ def put_text_frame(img,text,color):
     img=cv2.circle(img, (int(img.shape[1]/2), int(img.shape[0]/2) ), 100, color, 10)
     return img
 
-def save_img(img):
-    cv2.imwrite('imagen.jpg',img)
+def save_img(img,img_path):
+    cv2.imwrite(img_path,img)
 
 def draw_boxes(img, bbox, identities=None, offset=(0,0)):
     for i,box in enumerate(bbox):
