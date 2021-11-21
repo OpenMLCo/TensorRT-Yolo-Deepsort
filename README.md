@@ -40,15 +40,12 @@
   python onnx_to_tensorrt.py --onnx_model model_onnx/xxxx.onnx --output_engine model_tensorRT/xxxx.engine
   ```
 7. Run demos.
-
-
-  7.1 PedTrack
+  * PedTrack
     ```shell
     #Use the following code and replace the x:
     python Code here!!!
-    ```
-    
-  7.2 Pedestrian-photo
+    ```    
+  * Pedestrian-photo
     ```shell
     #Use the following code and replace the x:
     python run_hand_photo.py --engine_path model_tensorRT/xxxx.engine --usb
