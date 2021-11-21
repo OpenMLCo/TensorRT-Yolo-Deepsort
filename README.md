@@ -16,6 +16,16 @@
 - jetpack >= 4.5, following the [instructions](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit#intro) <br />
 - onnx == 1.4.0 or 1.4.1 <br />
 
+### Step by step
+
+1. Clone this repo
+  ```
+  git clone xxxx
+  ```
+
+2. Download weights
+
+
 ### Initial configuration
 
 Edit configs/DG_labels.txt file with the labels in yolo model. <br />
