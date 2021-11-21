@@ -48,11 +48,12 @@
     python run_hand_photo.py --engine_path model_tensorRT/xxxx.engine --usb
     ```
 
+## Credit
+This repo was created under xxx UAM xxx Smart cities in Caldas, Colombia.
 
-
-### Contact us
-Daniel Garcia Murillo (danielggarciam@gmail.com)
-Julian Caicedo Acosta (juccaicedoac@unal.edu.co )
+## Contact us
+- [Daniel Garcia Murillo](danielggarciam@gmail.com)
+- [Julián Caicedo Acosta](juccaicedoac@autonoma.edu.co)
 
 
 
