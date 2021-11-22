@@ -23,12 +23,12 @@
 
 1. Clone this repo
   ```
-  git clone xxxx
+  git clone https://github.com/OpenMLCo/TensorRT-Yolo-Deepsort.git
   ```
 
-2. Download weights and include this file in weights folder.
+2. Download pre-training weights and include this file in weights folder.
   ```shell
-  Weights link here!!!
+  gdown --id 10WXslmbCEqVR34jpMKfRYDVr2KhmzC9p
   ```
 3. Include yolo .cfg file in configs folder.
 4. Edit configs/DG_labels.txt file with the labels in yolo model.
