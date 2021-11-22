@@ -16,6 +16,9 @@
 - jetpack >= 4.5, following the [instructions](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit#intro) <br />
 - onnx == 1.4.0 or 1.4.1 <br />
 
+### Training yolo model
+[Training](Training/Training_yolov4_tiny.ipynb) YoloV4-tiny model
+
 ### Step by step
 
 1. Clone this repo
