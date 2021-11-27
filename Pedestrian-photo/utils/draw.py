@@ -6,8 +6,8 @@ palette = (2 ** 11 - 1, 2 ** 15 - 1, 2 ** 20 - 1)
 def put_QR(ori_im,QR_im,outserver):
     if outserver == -1:
         w,h,_ = QR_im.shape
-        QR_im = cv2.line(QR_im, (w, 0), (0, h), (0,0,255)), 3)
-        QR_im = cv2.line(QR_im, (0, 0), (w, h), (0,0,255)), 3)
+        QR_im = cv2.line(QR_im, (w, 0), (0, h), (0,0,255), 3)
+        QR_im = cv2.line(QR_im, (0, 0), (w, h), (0,0,255), 3)
     ori_im[-w::,-h::] = QR_im
     return ori_im
 
