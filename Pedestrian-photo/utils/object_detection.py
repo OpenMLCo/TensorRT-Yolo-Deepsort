@@ -7,6 +7,7 @@ import qrcode as qr
 import uuid
 from PIL import Image
 import sys
+import requests
 
 TRT_LOGGER = trt.Logger()
 
