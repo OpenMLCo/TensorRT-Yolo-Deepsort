@@ -1,18 +1,45 @@
 import tensorrt as trt
 from utils import common
 from utils.data_processing import *
-from utils.draw import draw_boxes, put_text_frame, save_img
+from utils.draw import draw_boxes, put_text_frame, save_img, put_QR
 import time
+import qrcode as qr
+import uuid
+from PIL import Image
 
 TRT_LOGGER = trt.Logger()
 
-
+def send_image_uid(uid,url,image_path,folder_save):
+    name= uid+'_img'+image_path.split('.')[-1]
+    payload={'code': uid}
+    files=[
+    ('image',(name,open(image_path,'rb'),folder_save))
+    ]
+    headers = {}
+    try:
+        response = requests.request("POST", url, headers=headers, data=payload, files=files)
+        return response
+    except:
+        e = sys.exc_info()[1]
+        return -1
+    
 def get_engine(engine_file_path):
     # If a serialized engine exists, use it instead of building an engine.
     print("Reading engine from file {}".format(engine_file_path))
     with open(engine_file_path, "rb") as f, trt.Runtime(TRT_LOGGER) as runtime:
         return runtime.deserialize_cuda_engine(f.read())
-
+def generate_QR():
+    uid = str(uuid.uuid1())
+    QR = qr.QRCode(
+        version=1,
+        error_correction=qr.constants.ERROR_CORRECT_H,
+        box_size=3,
+        border=4,
+        )
+    QR.add_data('https://medium.com/id?'+uid)
+    QR.make(uid)
+    QR_im = QR.make_image(fill_color="black", back_color="white").convert('RGB')    
+    return uid, QR_im
 class people_hand_detector():
     def __init__(self, engine_file_path,img_path):
         #---tensorrt----#
@@ -24,6 +51,9 @@ class people_hand_detector():
         self.count_hand_frames = 0
         self.img_path=img_path
         self.count_frames = 0
+        self.ori_im_qr=None
+        self.time_show_photo=0
+        self.flag_show_photo = False
         self.prev_time = time.time()
         self.save_foto_flag=False
         self.time_before_photo=2
@@ -71,10 +101,15 @@ class people_hand_detector():
                 color=(0,255,255)
                 if self.time_before_photo+5-(int(time.time()-self.prev_time)) < 0:
                     save_img(self.img_path,ori_im)
+                    uid, QR_im = generate_QR()
+                    outserver = send_image_uid(uid,self.url,self.img_path,self.folder_save)
+                    self.ori_im_qr = put_QR(ori_im,QR_im,outserver)
+                    self.flag_show_photo = True
                     self.save_foto_flag=False
                     self.count_hand_frames=0
                     self.count_frames=0
                     self.prev_time = time.time()
+                    self.time_show_photo = time.time()
                     ori_im = np.ones_like(ori_im,dtype=np.uint8)*255
                 else:
                     text = '{:d}'.format(self.time_before_photo+5-(int(time.time()-self.prev_time)))
@@ -100,6 +135,10 @@ class people_hand_detector():
         bbox_xywh, cls_ids, cls_conf = self.postprocessor.process(trt_outputs, (shape_orig_WH))
         #print(cls_ids)
         ori_im = self.take_photo(ori_im)
+        if self.flag_show_photo:
+            ori_im = self.ori_im_qr
+            if time.time()- self.time_show_photo > 30:
+                self.flag_show_photo = False
         if bbox_xywh is not None:
             # select person class
             #bbox_xywh[:, 3:] *= 1.2
