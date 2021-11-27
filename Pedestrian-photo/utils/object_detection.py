@@ -57,6 +57,8 @@ class people_hand_detector():
         self.prev_time = time.time()
         self.save_foto_flag=False
         self.time_before_photo=2
+        self.url="http://localhost:3333/device/photo"
+        self.folder_save='image/jpg'
         #---input info for yolov3-416------#
         self.input_resolution_yolov3_HW = (512, 512)#(416, 416)
 
