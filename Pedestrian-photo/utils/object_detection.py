@@ -40,7 +40,7 @@ def generate_QR():
     QR.add_data('https://medium.com/id?'+uid)
     QR.make(uid)
     QR_im = QR.make_image(fill_color="black", back_color="white").convert('RGB')    
-    return uid, QR_im
+    return uid, np.array(QR_im)
 class people_hand_detector():
     def __init__(self, engine_file_path,img_path):
         #---tensorrt----#
