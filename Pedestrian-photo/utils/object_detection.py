@@ -140,6 +140,7 @@ class people_hand_detector():
         ori_im = self.take_photo(ori_im)
         if self.flag_show_photo:
             ori_im = self.ori_im_qr
+            bbox_xywh=None
             if time.time()- self.time_show_photo > 30:
                 self.flag_show_photo = False
         if bbox_xywh is not None:
