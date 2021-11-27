@@ -6,6 +6,7 @@ import time
 import qrcode as qr
 import uuid
 from PIL import Image
+import sys
 
 TRT_LOGGER = trt.Logger()
 
