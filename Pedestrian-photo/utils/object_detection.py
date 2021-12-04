@@ -43,7 +43,7 @@ def generate_QR():
     QR_im = QR.make_image(fill_color="black", back_color="white").convert('RGB')    
     return uid, np.array(QR_im)
 class people_hand_detector():
-    def __init__(self, engine_file_path,img_path):
+    def __init__(self, engine_file_path,img_path,url="http://192.168.1.13:3333/device/photo",folder_save='image/jpg'):
         #---tensorrt----#
         self.engine = get_engine(engine_file_path)
         self.context = self.engine.create_execution_context()
@@ -59,8 +59,8 @@ class people_hand_detector():
         self.prev_time = time.time()
         self.save_foto_flag=False
         self.time_before_photo=2
-        self.url="http://192.168.1.13:3333/device/photo"
-        self.folder_save='image/jpg'
+        self.url=url
+        self.folder_save=folder_save
         #---input info for yolov3-416------#
         self.input_resolution_yolov3_HW = (512, 512)#(416, 416)
 

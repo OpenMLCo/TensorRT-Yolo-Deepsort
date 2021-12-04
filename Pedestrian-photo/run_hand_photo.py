@@ -22,6 +22,10 @@ def parse_args():
                             help='path to save your video like  ./test.mp4')
     parser.add_argument('--output_photo', type=str, default='img.jpg', 
                             help='path to save photo')
+    parser.add_argument('--server_url',type=str,default='http://192.168.1.13:3333/device/photo',
+                            help='server url')
+    parser.add_argument('--folder_save',type=str,default='image/jpg',
+                            help='folder path to save imagen on server')                            
     args = parser.parse_args()
     return args
 
@@ -74,7 +78,7 @@ def main():
     cam.open()
     if not cam.is_opened:
         sys.exit('Failed to open camera!')
-    model = people_hand_detector(args.engine_path,args.output_photo)
+    model = people_hand_detector(args.engine_path,args.output_photo,args.url,args.folder_save)
 
     cam.start()
     open_window(WINDOW_NAME, args.image_width, args.image_height,
