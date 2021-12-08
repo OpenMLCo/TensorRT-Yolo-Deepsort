@@ -109,17 +109,21 @@ def main():
     parser.add_argument(
         '-v', '--verbose', action='store_true',
         help='enable verbose output (for debugging)')
-    parser.add_argument(
-        '--model', type=str, required=True,
-        help=('[yolov3|yolov3-tiny|yolov3-spp|yolov4|yolov4-tiny]-'
-              '[{dimension}], where dimension could be a single '
-              'number (e.g. 288, 416, 608) or WxH (e.g. 416x256)'))
+    #parser.add_argument(
+    #    '--model', type=str, required=True,
+    #    help=('[yolov3|yolov3-tiny|yolov3-spp|yolov4|yolov4-tiny]-'
+    #          '[{dimension}], where dimension could be a single '
+    #          'number (e.g. 288, 416, 608) or WxH (e.g. 416x256)'))
+    parser.add_argument('--onnx_model',type=str,required=True,
+        help=('onnx file model_onnx/yolov4-800.onnx'))
+    parser.add_argument('--output_engine',type=str,required=True,
+        help=('output file path model_tensorRT/yolov4-800.engine'))
     args = parser.parse_args()
 
-    onnx_file_path = '%s.onnx' % args.model
+    onnx_file_path = args.onnx_model #'%s.onnx' % args.model
     if not os.path.isfile(onnx_file_path):
         raise SystemExit('ERROR: file (%s) not found!  You might want to run yolo_to_onnx.py first to generate it.' % onnx_file_path)
-    engine_file_path = '%s.engine' % args.model#'%s.trt' % args.model
+    engine_file_path = args.output_engine  #'%s.engine' % args.model#'%s.trt' % args.model
     _ = build_engine(onnx_file_path, engine_file_path, args.verbose)
 
 
