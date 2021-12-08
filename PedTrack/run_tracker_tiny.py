@@ -18,7 +18,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description=desc)
     parser = add_camera_args(parser)
     #TODO change default tiny engine
-    parser.add_argument('--engine_path', type=str, default='./weights/yolov4-tiny-800.engine', help='set your engine file path to load')
+    parser.add_argument('--engine_path', type=str, default='./weights/yolov4-tiny-512.engine', help='set your engine file path to load')
     parser.add_argument('--config_deepsort', type=str, default="./configs/deep_sort.yaml")
     parser.add_argument('--output_file', type=str, default='./test.mp4', help='path to save your video like  ./test.mp4')
 
