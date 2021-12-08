@@ -871,6 +871,12 @@ def main():
         help=('[yolov3|yolov3-tiny|yolov3-spp|yolov4|yolov4-tiny]-'
               '[{dimension}], where dimension could be a single '
               'number (e.g. 288, 416, 608) or WxH (e.g. 416x256)'))
+    parser.add_argument('--weights',type=str,required=True,
+        help=('weights path weights/yolov4.weights'))
+    parser.add_argument('--config',type=str,required=True,
+        help=('config path configs/yolov4.cfg'))
+    parser.add_argument('--output_file',type=str,required=True,
+        help=('output file onnx/yolov4-tiny-800.onnx'))
     parser.add_argument(
         '--category_num', type=int, default=80,
         help='number of object categories [80]')
@@ -878,13 +884,13 @@ def main():
     if args.category_num <= 0:
         raise SystemExit('ERROR: bad category_num (%d)!' % args.category_num)
 
-    cfg_file_path = '%s.cfg' % args.model
+    cfg_file_path = args.config #folder_path+'%s.cfg' % args.model
     if not os.path.isfile(cfg_file_path):
         raise SystemExit('ERROR: file (%s) not found!' % cfg_file_path)
-    weights_file_path = '%s.weights' % args.model
+    weights_file_path = args.weights #folder_path+'%s.weights' % args.model
     if not os.path.isfile(weights_file_path):
         raise SystemExit('ERROR: file (%s) not found!' % weights_file_path)
-    output_file_path = '%s.onnx' % args.model
+    output_file_path = args.output_file #args.output_file #'%s.onnx' % args.model
 
     yolo_dim = args.model.split('-')[-1]
     if 'x' in yolo_dim:
