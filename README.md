@@ -44,7 +44,7 @@
   * PedTrack
     ```shell
     #Using usb camera:
-    python3 run_tracker_tini.py --engine_path model_tensorRT/xxx.engine --usb
+    python3 run_tracker_tiny.py --engine_path model_tensorRT/xxx.engine --usb
     ```    
   * Pedestrian-photo
     ```shell
