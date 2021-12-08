@@ -34,21 +34,22 @@
 4. Edit configs/DG_labels.txt file with the labels in yolo model.
 5. Convert yolo model to Onnx.
   ```shell
-  python yolo_to_onnx.py --model yolov4-tiny-512 --weights weights/xxxx.weights --config confis/xxxx.cfg --output_file model_onnx/xxxx.onnx --category_num x
+  python3 yolo_to_onnx.py --model yolov4-tiny-512 --weights weights/xxxx.weights --config confis/xxxx.cfg --output_file model_onnx/xxxx.onnx --category_num x
   ```
 6. Convert Onnx model to TensorRT engine. 
   ```shell
-  python onnx_to_tensorrt.py --onnx_model model_onnx/xxxx.onnx --output_engine model_tensorRT/xxxx.engine
+  python3 onnx_to_tensorrt.py --onnx_model model_onnx/xxxx.onnx --output_engine model_tensorRT/xxxx.engine
   ```
 7. Run demos.
   * PedTrack
     ```shell
-    python Code here!!!
+    #Using usb camera:
+    python3 run_tracker_tini.py --engine_path model_tensorRT/xxx.engine --usb
     ```    
   * Pedestrian-photo
     ```shell
     #Using usb camera:
-    python run_hand_photo.py --engine_path model_tensorRT/xxxx.engine --usb
+    python3 run_hand_photo.py --engine_path model_tensorRT/xxxx.engine --usb
     ```
 
 ## Credit
