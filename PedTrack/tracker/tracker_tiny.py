@@ -34,10 +34,10 @@ class Tracker_tiny():
 
         # self.shape_orig_WH = image_raw.size
         #TODO tiny
-        self.output_shapes = [(1, 21, 25, 25), (1, 21, 50, 50)]#[(1, 255, 13, 13), (1, 255, 26, 26)]
+        self.output_shapes = [(1,18,18,16),(1,18,32,32)]#[(1, 255, 13, 13), (1, 255, 26, 26)]#800 (1, 21, 25, 25), (1, 21, 50, 50)
         self.postprocessor_args = {"yolo_masks": [ (3, 4, 5), (0, 1, 2)],
-                              # A list of 3 three-dimensional tuples for the YOLO masks
-                              "yolo_anchors": [(31,48), (61,136), (94,219), (167,286), (130,460), (442,581)],#[(10, 14), (23, 27), (37, 58),(81, 82), (135, 169), (344, 319)],
+                              # A list of 3 three-dimensional tuples for the YOLO masks- for 800 (31,48), (61,136), (94,219), (167,286), (130,460), (442,581)
+                              "yolo_anchors": [(12,58), (21,85), (29,130), (41,164), (51,247), (80,337)],#[(10, 14), (23, 27), (37, 58),(81, 82), (135, 169), (344, 319)],
                               "obj_threshold": 0.5,  # Threshold for object coverage, float value between 0 and 1
                               "nms_threshold": 0.3,
                               # Threshold for non-max suppression algorithm, float value between 0 and 1
