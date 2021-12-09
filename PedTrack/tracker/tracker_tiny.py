@@ -26,7 +26,7 @@ class Tracker_tiny():
         # ---tensorrt----#
 
         #---input info for yolov3-416------#
-        self.input_resolution_yolov3_HW = (800,800)#(416, 416)
+        self.input_resolution_yolov3_HW = (512,512)#(416, 416)
 
         self.preprocessor = PreprocessYOLO(self.input_resolution_yolov3_HW)
 
