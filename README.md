@@ -37,7 +37,7 @@
 4. Edit configs/DG_labels.txt file with the labels in yolo model.
 5. Convert yolo model to Onnx.
   ```shell
-  python3 yolo_to_onnx.py --model yolov4-tiny-512 --weights weights/xxxx.weights --config confis/xxxx.cfg --output_file model_onnx/xxxx.onnx --category_num x
+  python3 yolo_to_onnx.py --model yolov4-tiny-512 --weights weights/xxxx.weights --config configs/xxxx.cfg --output_file model_onnx/xxxx.onnx --category_num x
   ```
 6. Convert Onnx model to TensorRT engine. 
   ```shell
