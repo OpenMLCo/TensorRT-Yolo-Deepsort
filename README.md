@@ -28,6 +28,9 @@
 
 2. Download pre-training weights and include this file in weights folder.
   ```shell
+  # For PedTrack
+  gdown --id 14O2iZHwffKXgI3WGRlmYEmNPHEpW-mpn
+  # For Pedestrian-photo
   gdown --id 10WXslmbCEqVR34jpMKfRYDVr2KhmzC9p
   ```
 3. Include yolo .cfg file in configs folder.
