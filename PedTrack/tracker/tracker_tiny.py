@@ -76,6 +76,5 @@ class Tracker_tiny():
                 bbox_xyxy = outputs[:, :4]
                 identities = outputs[:, -1]
                 ori_im = draw_boxes(ori_im, bbox_xyxy, identities)
-
-
-        return ori_im
+        
+        return ori_im, self.deepsort.get_next_id()
