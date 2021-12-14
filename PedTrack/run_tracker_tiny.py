@@ -5,10 +5,20 @@ from utils.camera_setting import *
 from utils.parser import get_config
 import cv2
 import time
+import requests
 
 from tracker.tracker_tiny import Tracker_tiny
 
 WINDOW_NAME = 'TrtYolov3_tiny_deepsort'
+
+def send_image_uid(data,url):
+    payload={'data': data}
+    try:
+        response = requests.request("POST", url, data=payload)
+        return response
+    except:
+        e = sys.exc_info()[1]
+        return -1
 
 def parse_args():
     """Parse camera and input setting arguments."""
@@ -23,8 +33,8 @@ def parse_args():
     parser.add_argument('--output_file', type=str, default='./test.mp4', help='path to save your video like  ./test.mp4')
     parser.add_argument('--server_url',type=str,default='http://192.168.1.13:3333/device/track',
                             help='server url')
-    parser.add_argument('--folder_save',type=str,default='tracking/info',
-                            help='folder path to save imagen on server')   
+    parser.add_argument('--frame_send',type=int,default=30,
+                            help='send data frequency in frames')
     args = parser.parse_args()
     return args
 
@@ -56,6 +66,8 @@ def loop_and_track(cam, tracker, arg):
                 cam.write(img_final)
                 end = time.time()
                 print("time: {:.03f}s, fps: {:.03f}".format(end - start, 1 / (end - start)))
+                if frame_id%args.frame_send==0:
+                    send_image_uid(counts,args.server_url)
             key = cv2.waitKey(1)
             if key == 27:  # ESC key: quit program
                 break
@@ -72,6 +84,8 @@ def loop_and_track(cam, tracker, arg):
                 cv2.imshow(WINDOW_NAME, img_final)
                 end = time.time()
                 print("time: {:.03f}s, fps: {:.03f}".format(end - start, 1 / (end - start)))
+                if frame_id%args.frame_send==0:
+                    send_image_uid(counts,args.server_url)                
             key = cv2.waitKey(1)
             if key == 27:  # ESC key: quit program
                 break
@@ -89,7 +103,7 @@ def main():
     if not cam.is_opened:
         sys.exit('Failed to open camera!')
 
-    tracker = Tracker_tiny(cfg, args.engine_path,args.server_url,args.folder_save) #TODO
+    tracker = Tracker_tiny(cfg, args.engine_path) #TODO
 
     cam.start()
     open_window(WINDOW_NAME, args.image_width, args.image_height,
