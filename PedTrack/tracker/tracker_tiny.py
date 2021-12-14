@@ -14,7 +14,7 @@ def get_engine(engine_file_path):
         return runtime.deserialize_cuda_engine(f.read())
 
 class Tracker_tiny():
-    def __init__(self, cfg, engine_file_path,args.server_url,args.folder_save):
+    def __init__(self, cfg, engine_file_path):
         self.cfg = cfg
         # self.args = args
 
