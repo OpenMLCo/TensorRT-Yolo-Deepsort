@@ -51,7 +51,7 @@ def loop_and_track(cam, tracker, arg):
             img = cam.read()
             if img is not None: #this line is a must in case not reading img correctly
                 start = time.time()
-                img_final = tracker.run(img)
+                img_final, counts = tracker.run(img)
                 cv2.imshow(WINDOW_NAME, img_final)
                 cam.write(img_final)
                 end = time.time()
@@ -68,7 +68,7 @@ def loop_and_track(cam, tracker, arg):
             img = cam.read()
             if img is not None: #this line is a must in case not reading img correctly
                 start = time.time()
-                img_final = tracker.run(img)
+                img_final, counts = tracker.run(img)
                 cv2.imshow(WINDOW_NAME, img_final)
                 end = time.time()
                 print("time: {:.03f}s, fps: {:.03f}".format(end - start, 1 / (end - start)))
