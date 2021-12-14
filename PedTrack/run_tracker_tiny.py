@@ -21,7 +21,10 @@ def parse_args():
     parser.add_argument('--engine_path', type=str, default='./weights/yolov4-tiny-512.engine', help='set your engine file path to load')
     parser.add_argument('--config_deepsort', type=str, default="./configs/deep_sort.yaml")
     parser.add_argument('--output_file', type=str, default='./test.mp4', help='path to save your video like  ./test.mp4')
-
+    parser.add_argument('--server_url',type=str,default='http://192.168.1.13:3333/device/track',
+                            help='server url')
+    parser.add_argument('--folder_save',type=str,default='tracking/info',
+                            help='folder path to save imagen on server')   
     args = parser.parse_args()
     return args
 
@@ -48,7 +51,7 @@ def loop_and_track(cam, tracker, arg):
             img = cam.read()
             if img is not None: #this line is a must in case not reading img correctly
                 start = time.time()
-                img_final = tracker.run(img)
+                img_final = tracker.run(img,args.server_url,args.folder_save)
                 cv2.imshow(WINDOW_NAME, img_final)
                 cam.write(img_final)
                 end = time.time()
@@ -65,7 +68,7 @@ def loop_and_track(cam, tracker, arg):
             img = cam.read()
             if img is not None: #this line is a must in case not reading img correctly
                 start = time.time()
-                img_final = tracker.run(img)
+                img_final = tracker.run(img,args.server_url,args.folder_save)
                 cv2.imshow(WINDOW_NAME, img_final)
                 end = time.time()
                 print("time: {:.03f}s, fps: {:.03f}".format(end - start, 1 / (end - start)))
