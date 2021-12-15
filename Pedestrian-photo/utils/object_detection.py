@@ -12,7 +12,7 @@ import requests
 TRT_LOGGER = trt.Logger()
 
 def send_image_uid(uid,url,image_path,folder_save):
-    name= uid+'_img'+image_path.split('.')[-1]
+    name= uid+'_img.'+image_path.split('.')[-1]
     payload={'code': uid}
     files=[
     ('image',(name,open(image_path,'rb'),folder_save))
