@@ -9,6 +9,15 @@ USB_GSTREAMER = True
 
 def add_camera_args(parser):
     """Add parser augument for camera options."""
+    parser.add_argument('--rtsp', dest='use_rtsp',
+                        help='use IP CAM (remember to also set --uri)',
+                        action='store_true')
+    parser.add_argument('--uri', dest='rtsp_uri',
+                        help='RTSP URI, e.g. rtsp://192.168.1.64:554',
+                        default=None, type=str)
+    parser.add_argument('--latency', dest='rtsp_latency',
+                        help='latency in ms for RTSP [200]',
+                        default=200, type=int)
     parser.add_argument('--file', dest='use_file',
                         help='use a video file as input (remember to '
                         'also set --filename)',
@@ -36,7 +45,11 @@ def add_camera_args(parser):
     return parser
 
 
-
+def open_cam_rtsp(uri, width, height, latency):
+    gst_str = ("rtspsrc location={} latency={} ! rtph264depay ! h264parse ! omxh264dec ! "
+               "nvvidconv ! video/x-raw, width=(int){}, height=(int){}, format=(string)BGRx ! "
+               "videoconvert ! appsink").format(uri, latency, width, height)
+    return cv2.VideoCapture(gst_str, cv2.CAP_GSTREAMER)
 
 def open_cam_usb(dev, width, height):
     """Open a USB webcam."""
@@ -144,6 +157,12 @@ class Camera():
                 args.image_width,
                 args.image_height
             )
+            self.use_thread = True
+        elif args.use_rtsp:
+            self.cap = open_cam_rtsp(args.rtsp_uri,
+                            args.image_width,
+                            args.image_height,
+                            args.rtsp_latency)
             self.use_thread = True
         else:  # by default, use the jetson onboard camera
             self.cap = open_cam_onboard()
