@@ -52,7 +52,7 @@ def loop_and_track(cam, tracker, arg):
       cam: the camera instance (video source).
       tracker: the TRT YOLOv3 object detector instance.
     """
-
+    frame_id=0
     if arg.filename:
         while True:
             if cv2.getWindowProperty(WINDOW_NAME, 0) < 0:
@@ -66,12 +66,12 @@ def loop_and_track(cam, tracker, arg):
                 cam.write(img_final)
                 end = time.time()
                 print("time: {:.03f}s, fps: {:.03f}".format(end - start, 1 / (end - start)))
-                if frame_id%args.frame_send==0:
-                    send_image_uid(counts,args.server_url)
+                if frame_id%arg.frame_send==0:
+                    send_image_uid(counts,arg.server_url)
             key = cv2.waitKey(1)
             if key == 27:  # ESC key: quit program
                 break
-
+            frame_id+=1
 
     else:
         while True:
@@ -84,11 +84,12 @@ def loop_and_track(cam, tracker, arg):
                 cv2.imshow(WINDOW_NAME, img_final)
                 end = time.time()
                 print("time: {:.03f}s, fps: {:.03f}".format(end - start, 1 / (end - start)))
-                if frame_id%args.frame_send==0:
-                    send_image_uid(counts,args.server_url)                
+                if frame_id%arg.frame_send==0:
+                    send_image_uid(counts,arg.server_url)                
             key = cv2.waitKey(1)
             if key == 27:  # ESC key: quit program
                 break
+            frame_id+=1
 
 
 
