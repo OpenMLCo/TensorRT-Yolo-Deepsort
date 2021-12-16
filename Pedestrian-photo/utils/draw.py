@@ -1,5 +1,6 @@
 import numpy as np
 import cv2
+from change_backgroud import change_backgroud
 
 palette = (2 ** 11 - 1, 2 ** 15 - 1, 2 ** 20 - 1)
 
@@ -30,9 +31,11 @@ def put_text_frame(img,text,color):
     img=cv2.circle(img, (int(img.shape[1]/2), int(img.shape[0]/2) ), 100, color, 10)
     return img
 
-def save_img(img_path,img):
+def save_img(img_path,img,background_img):
     cv2.imwrite(img_path,img)
-
+    if background_img is not None:
+        img_final = change_backgroud(img_path,background_img)
+        cv2.imwrite(img_path,img_final)
 def draw_boxes(img, bbox, identities=None, offset=(0,0)):
     for i,box in enumerate(bbox):
         x1,y1,x2,y2 = [int(i) for i in box]

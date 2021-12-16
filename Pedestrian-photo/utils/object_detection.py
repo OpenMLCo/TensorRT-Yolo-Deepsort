@@ -43,7 +43,7 @@ def generate_QR():
     QR_im = QR.make_image(fill_color="black", back_color="white").convert('RGB')    
     return uid, np.array(QR_im)
 class people_hand_detector():
-    def __init__(self, engine_file_path,img_path,url="http://192.168.1.13:3333/device/photo",folder_save='image/jpg'):
+    def __init__(self, engine_file_path,img_path,url="http://192.168.1.13:3333/device/photo",folder_save='image/jpg',background_img=None):
         #---tensorrt----#
         self.engine = get_engine(engine_file_path)
         self.context = self.engine.create_execution_context()
@@ -51,6 +51,7 @@ class people_hand_detector():
         # ---tensorrt----#
         # initializate current photo
         self.count_hand_frames = 0
+        self.background_img=background_img
         self.img_path=img_path
         self.count_frames = 0
         self.ori_im_qr=None
@@ -91,7 +92,7 @@ class people_hand_detector():
 
     def take_photo(self,ori_im):
         if time.time()-self.prev_time > self.time_before_photo:
-            if self.count_hand_frames/self.count_frames > 0.5 or self.save_foto_flag:
+            if self.count_hand_frames/self.count_frames > 0.1 or self.save_foto_flag:
                 #color=(0,0,255)
                 #text = 'Tiempo con mano {:1f}'.format(time.time()-self.prev_time)
                 self.save_foto_flag=True
@@ -104,7 +105,7 @@ class people_hand_detector():
             if self.save_foto_flag:
                 color=(0,255,255)
                 if self.time_before_photo+5-(int(time.time()-self.prev_time)) < 0:
-                    save_img(self.img_path,ori_im)
+                    save_img(self.img_path,ori_im,self.background_img)
                     uid, QR_im = generate_QR()
                     outserver = send_image_uid(uid,self.url,self.img_path,self.folder_save)
                     self.ori_im_qr = put_QR(ori_im,QR_im,outserver)

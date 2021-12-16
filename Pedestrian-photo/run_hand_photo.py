@@ -25,14 +25,17 @@ def parse_args():
     parser.add_argument('--server_url',type=str,default='http://192.168.1.13:3333/device/photo',
                             help='server url')
     parser.add_argument('--folder_save',type=str,default='image/jpg',
-                            help='folder path to save imagen on server')                            
+                            help='folder path to save imagen on server')
+    parser.add_argument('--background_img',default=None,
+                            help='Background_img path')
     args = parser.parse_args()
     return args
 
 def open_window(window_name, width, height, title):
     """Open the display window."""
     cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
-    cv2.resizeWindow(window_name, width, height)
+    #cv2.resizeWindow(window_name, width, height)
+    cv2.setWindowProperty(window_name,cv2.WND_PROP_FULLSCREEN,cv2.WINDOW_FULLSCREEN)
     cv2.setWindowTitle(window_name, title)
 
 def loop_and_detect(cam, model, arg):
@@ -78,7 +81,7 @@ def main():
     cam.open()
     if not cam.is_opened:
         sys.exit('Failed to open camera!')
-    model = people_hand_detector(args.engine_path,args.output_photo,args.server_url,args.folder_save)
+    model = people_hand_detector(args.engine_path,args.output_photo,args.server_url,args.folder_save,args.background_img)
 
     cam.start()
     open_window(WINDOW_NAME, args.image_width, args.image_height,
