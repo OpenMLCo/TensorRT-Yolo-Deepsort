@@ -145,13 +145,13 @@ class people_hand_detector():
             bbox_xywh=None
             if time.time()- self.time_show_photo > 30:
                 self.flag_show_photo = False
+        mask = cls_ids == 2
+        bbox_xywh = bbox_xywh[mask]
         if bbox_xywh is not None:
             # select person class
             #bbox_xywh[:, 3:] *= 1.2
             #cls_conf = cls_conf[mask]
             # print('hahahat', bbox_xywh.dtype)
-            #mask = cls_ids == 2
-            #bbox_xywh = bbox_xywh[mask]
             # do tracking
             #outputs = self.deepsort.update(bbox_xywh, cls_conf, ori_im)
 
