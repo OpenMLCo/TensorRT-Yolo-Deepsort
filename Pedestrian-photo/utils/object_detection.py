@@ -164,7 +164,8 @@ class people_hand_detector():
             for box in bbox_xywh:
                 x1,y1,x2,y2 = self._xywh_to_xyxy(box)
                 bbox_xyxy.append(np.array([x1,y1,x2,y2],dtype=np.int))
-            bbox_xyxy = np.stack(bbox_xyxy,axis=0)
+            if len(bbox_xyxy)>1:
+                bbox_xyxy = np.stack(bbox_xyxy,axis=0)
             #bbox_xyxy=bbox_xywh
             #identities = outputs[:, -1]
             if sum(cls_ids == 2)>0:
