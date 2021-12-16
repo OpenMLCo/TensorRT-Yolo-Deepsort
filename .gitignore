@@ -5,6 +5,8 @@ __pycache__/
 
 # C extensions
 *.so
+# tar extension
+*.tar
 
 # yolo weights, onnx and engine (TensorRT)
 *.weights
