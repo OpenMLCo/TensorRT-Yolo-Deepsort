@@ -34,8 +34,8 @@ def parse_args():
 def open_window(window_name, width, height, title):
     """Open the display window."""
     cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
-    #cv2.resizeWindow(window_name, width, height)
-    cv2.setWindowProperty(window_name,cv2.WND_PROP_FULLSCREEN,cv2.WINDOW_FULLSCREEN)
+    cv2.resizeWindow(window_name, width, height)
+    #cv2.setWindowProperty(window_name,cv2.WND_PROP_FULLSCREEN,cv2.WINDOW_FULLSCREEN)
     cv2.setWindowTitle(window_name, title)
 
 def loop_and_detect(cam, model, arg):
