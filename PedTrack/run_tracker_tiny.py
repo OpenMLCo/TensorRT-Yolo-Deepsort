@@ -6,15 +6,17 @@ from utils.parser import get_config
 import cv2
 import time
 import requests
+import json
 
 from tracker.tracker_tiny import Tracker_tiny
 
 WINDOW_NAME = 'TrtYolov3_tiny_deepsort'
 
-def send_image_uid(data,url):
-    payload={'data': data}
+def send_image_uid(data,url,token):
+    payload = json.dumps({"count": data})
+    headers = {'device_token':token,'Content-Type': 'application/json'}
     try:
-        response = requests.request("POST", url, data=payload)
+        response = requests.request("POST", url, headers=headers, data=payload)
         return response
     except:
         e = sys.exc_info()[1]
@@ -31,10 +33,12 @@ def parse_args():
     parser.add_argument('--engine_path', type=str, default='./weights/yolov4-tiny-512.engine', help='set your engine file path to load')
     parser.add_argument('--config_deepsort', type=str, default="./configs/deep_sort.yaml")
     parser.add_argument('--output_file', type=str, default='./test.mp4', help='path to save your video like  ./test.mp4')
-    parser.add_argument('--server_url',type=str,default='http://192.168.1.13:3333/device/track',
+    parser.add_argument('--server_url',type=str,default='http://52.70.96.242:1337/control-visits',
                             help='server url')
-    parser.add_argument('--frame_send',type=int,default=30,
+    parser.add_argument('--frame_send',type=int,default=75,
                             help='send data frequency in frames')
+    parser.add_argument('--token',type=str,default='',
+                            help='jetson token')
     args = parser.parse_args()
     return args
 
@@ -67,7 +71,7 @@ def loop_and_track(cam, tracker, arg):
                 end = time.time()
                 print("time: {:.03f}s, fps: {:.03f}".format(end - start, 1 / (end - start)))
                 if frame_id%arg.frame_send==0:
-                    send_image_uid(counts,arg.server_url)
+                    send_image_uid(counts,arg.server_url,arg.token)
             key = cv2.waitKey(1)
             if key == 27:  # ESC key: quit program
                 break
@@ -85,7 +89,7 @@ def loop_and_track(cam, tracker, arg):
                 end = time.time()
                 print("time: {:.03f}s, fps: {:.03f}".format(end - start, 1 / (end - start)))
                 if frame_id%arg.frame_send==0:
-                    send_image_uid(counts,arg.server_url)                
+                    send_image_uid(counts,arg.server_url,arg.token)                
             key = cv2.waitKey(1)
             if key == 27:  # ESC key: quit program
                 break
