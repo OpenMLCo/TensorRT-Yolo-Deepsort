@@ -8,16 +8,17 @@ import uuid
 from PIL import Image
 import sys
 import requests
+import datetime
 
 TRT_LOGGER = trt.Logger()
 
 def send_image_uid(uid,url,image_path,folder_save):
     name= uid+'_img.'+image_path.split('.')[-1]
-    payload={'code': uid}
+    payload={'photo_code': uid,'photo_date': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
     files=[
-    ('image',(name,open(image_path,'rb'),folder_save))
+    ('file',(name,open(image_path,'rb'),folder_save))
     ]
-    headers = {}
+    headers = {'device_token':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIxIn0.MXMTlNvYxMoja99v85QuqtpJfoyZx4uItp8_bq8TQV4'}
     try:
         response = requests.request("POST", url, headers=headers, data=payload, files=files)
         return response
@@ -31,19 +32,19 @@ def get_engine(engine_file_path):
     with open(engine_file_path, "rb") as f, trt.Runtime(TRT_LOGGER) as runtime:
         return runtime.deserialize_cuda_engine(f.read())
 def generate_QR():
-    uid = str(uuid.uuid1())
+    uid = str(uuid.uuid4())
     QR = qr.QRCode(
         version=1,
         error_correction=qr.constants.ERROR_CORRECT_H,
         box_size=3,
         border=4,
         )
-    QR.add_data('https://medium.com/id?'+uid)
+    QR.add_data('http://www.smartcities4caldas.com/formulario?code='+uid)
     QR.make(uid)
     QR_im = QR.make_image(fill_color="black", back_color="white").convert('RGB')    
     return uid, np.array(QR_im)
 class people_hand_detector():
-    def __init__(self, engine_file_path,img_path,url="http://192.168.1.13:3333/device/photo",folder_save='image/jpg',background_img=None):
+    def __init__(self, engine_file_path,img_path,url="http://52.70.96.242:1337/tourist-photos",folder_save='image/jpg',background_img=None):
         #---tensorrt----#
         self.engine = get_engine(engine_file_path)
         self.context = self.engine.create_execution_context()
