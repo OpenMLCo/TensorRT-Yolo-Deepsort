@@ -1,7 +1,7 @@
 import tensorrt as trt
 from utils import common
 from utils.data_processing import *
-from utils.draw import draw_boxes, put_text_frame, save_img, put_QR, #put_frame
+from utils.draw import draw_boxes, put_text_frame, save_img, put_QR #,put_frame
 import time
 import qrcode as qr
 import uuid
