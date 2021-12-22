@@ -28,9 +28,9 @@ def parse_args():
                             help='folder path to save imagen on server')
     parser.add_argument('--background_img',default=None,
                             help='Background_img path')
-    parser.add_argument('--token',default=None,
+    parser.add_argument('--token',type=str,default='',
                             help='jetson token')
-    parser.add_argument('--frame',default='./Frames/frame1.png',
+    parser.add_argument('--frame',type=str,default='./Frames/frame1.png',
                             help='Background_img path')
     args = parser.parse_args()
     return args
