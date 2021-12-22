@@ -28,6 +28,10 @@ def parse_args():
                             help='folder path to save imagen on server')
     parser.add_argument('--background_img',default=None,
                             help='Background_img path')
+    parser.add_argument('--token',default=None,
+                            help='jetson token')
+    parser.add_argument('--frame',default='./Frames/frame1.png',
+                            help='Background_img path')
     args = parser.parse_args()
     return args
 
@@ -81,7 +85,7 @@ def main():
     cam.open()
     if not cam.is_opened:
         sys.exit('Failed to open camera!')
-    model = people_hand_detector(args.engine_path,args.output_photo,args.server_url,args.folder_save,args.background_img)
+    model = people_hand_detector(args.engine_path,args.output_photo,args.server_url,args.folder_save,args.background_img,args.token,args.frame)
 
     cam.start()
     open_window(WINDOW_NAME, args.image_width, args.image_height,
