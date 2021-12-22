@@ -4,6 +4,8 @@ from change_backgroud import change_backgroud
 
 palette = (2 ** 11 - 1, 2 ** 15 - 1, 2 ** 20 - 1)
 
+#def put_frame(ori_im,frame):
+
 def put_QR(ori_im,QR_im,outserver):
     w,h,_ = QR_im.shape
     if outserver == -1:
