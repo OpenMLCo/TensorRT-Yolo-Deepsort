@@ -39,6 +39,8 @@ def parse_args():
                             help='send data frequency in frames')
     parser.add_argument('--token',type=str,default='',
                             help='jetson token')
+    parser.add_argument('--show',type=bool,default=False,
+                            help='visualization')
     args = parser.parse_args()
     return args
 
@@ -66,7 +68,8 @@ def loop_and_track(cam, tracker, arg):
             if img is not None: #this line is a must in case not reading img correctly
                 start = time.time()
                 img_final, counts = tracker.run(img)
-                cv2.imshow(WINDOW_NAME, img_final)
+                if arg.show:
+                    cv2.imshow(WINDOW_NAME, img_final)
                 cam.write(img_final)
                 end = time.time()
                 print("time: {:.03f}s, fps: {:.03f}".format(end - start, 1 / (end - start)))
@@ -85,7 +88,8 @@ def loop_and_track(cam, tracker, arg):
             if img is not None: #this line is a must in case not reading img correctly
                 start = time.time()
                 img_final, counts = tracker.run(img)
-                cv2.imshow(WINDOW_NAME, img_final)
+                if arg.show:
+                    cv2.imshow(WINDOW_NAME, img_final)
                 end = time.time()
                 print("time: {:.03f}s, fps: {:.03f}".format(end - start, 1 / (end - start)))
                 if frame_id%arg.frame_send==0:
