@@ -22,7 +22,7 @@ def parse_args():
                             help='path to save your video like  ./test.mp4')
     parser.add_argument('--output_photo', type=str, default='img.jpg', 
                             help='path to save photo')
-    parser.add_argument('--server_url',type=str,default='http://192.168.1.13:3333/device/photo',
+    parser.add_argument('--server_url',type=str,default='http://52.70.96.242:1337/tourist-photos',
                             help='server url')
     parser.add_argument('--folder_save',type=str,default='image/jpg',
                             help='folder path to save imagen on server')
