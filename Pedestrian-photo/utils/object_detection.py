@@ -1,7 +1,7 @@
 import tensorrt as trt
 from utils import common
 from utils.data_processing import *
-from utils.draw import draw_boxes, put_text_frame, save_img, put_QR, put_frame
+from utils.draw import draw_boxes, put_text_frame, save_img, put_QR, #put_frame
 import time
 import qrcode as qr
 import uuid
@@ -108,8 +108,8 @@ class people_hand_detector():
             if self.save_foto_flag:
                 color=(0,255,255)
                 if self.time_before_photo+5-(int(time.time()-self.prev_time)) < 0:
-                    if self.frame:
-                        ori_im = put_frame(ori_im,self.frame)
+                    #if self.frame:
+                    #    ori_im = put_frame(ori_im,self.frame)
                     save_img(self.img_path,ori_im,self.background_img)
                     uid, QR_im = generate_QR()
                     outserver = send_image_uid(uid,self.url,self.img_path,self.folder_save,self.token)
