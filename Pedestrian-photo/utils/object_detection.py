@@ -1,7 +1,7 @@
 import tensorrt as trt
 from utils import common
 from utils.data_processing import *
-from utils.draw import draw_boxes, put_text_frame, save_img, put_QR
+from utils.draw import draw_boxes, put_text_frame, save_img, put_QR, put_frame
 import time
 import qrcode as qr
 import uuid
@@ -12,13 +12,13 @@ import datetime
 
 TRT_LOGGER = trt.Logger()
 
-def send_image_uid(uid,url,image_path,folder_save):
+def send_image_uid(uid,url,image_path,folder_save,token):
     name= uid+'_img.'+image_path.split('.')[-1]
     payload={'photo_code': uid,'photo_date': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
     files=[
     ('file',(name,open(image_path,'rb'),folder_save))
     ]
-    headers = {'device_token':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VfaWQiOiIxIn0.MXMTlNvYxMoja99v85QuqtpJfoyZx4uItp8_bq8TQV4'}
+    headers = {'device_token':token}
     try:
         response = requests.request("POST", url, headers=headers, data=payload, files=files)
         return response
@@ -44,7 +44,7 @@ def generate_QR():
     QR_im = QR.make_image(fill_color="black", back_color="white").convert('RGB')    
     return uid, np.array(QR_im)
 class people_hand_detector():
-    def __init__(self, engine_file_path,img_path,url="http://52.70.96.242:1337/tourist-photos",folder_save='image/jpg',background_img=None):
+    def __init__(self, engine_file_path,img_path,url="http://52.70.96.242:1337/tourist-photos",folder_save='image/jpg',background_img=None,token='',frame):
         #---tensorrt----#
         self.engine = get_engine(engine_file_path)
         self.context = self.engine.create_execution_context()
@@ -52,6 +52,8 @@ class people_hand_detector():
         # ---tensorrt----#
         # initializate current photo
         self.count_hand_frames = 0
+        self.frame = frame
+        self.token = token
         self.background_img=background_img
         self.img_path=img_path
         self.count_frames = 0
@@ -106,9 +108,11 @@ class people_hand_detector():
             if self.save_foto_flag:
                 color=(0,255,255)
                 if self.time_before_photo+5-(int(time.time()-self.prev_time)) < 0:
+                    if self.frame:
+                        ori_im = put_frame(ori_im,self.frame)
                     save_img(self.img_path,ori_im,self.background_img)
                     uid, QR_im = generate_QR()
-                    outserver = send_image_uid(uid,self.url,self.img_path,self.folder_save)
+                    outserver = send_image_uid(uid,self.url,self.img_path,self.folder_save,self.token)
                     self.ori_im_qr = put_QR(ori_im,QR_im,outserver)
                     self.flag_show_photo = True
                     self.save_foto_flag=False
